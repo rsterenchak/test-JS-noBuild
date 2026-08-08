@@ -84,3 +84,176 @@ body {
 .session__control--stop:focus-visible {
     outline-color: var(--accent);
 }
+
+/* The tag sheet: slides up from the bottom after a session stops, dimming the
+   screen behind it. A backdrop tap dismisses it one-handed. */
+.tag-sheet__backdrop {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.2s ease;
+    z-index: 10;
+}
+
+.tag-sheet__backdrop.is-open {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.tag-sheet {
+    width: 100%;
+    max-width: 34rem;
+    background: var(--surface);
+    border-radius: 1.25rem 1.25rem 0 0;
+    padding:
+        1.5rem 1.25rem
+        max(1.5rem, env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* Start off-screen; the .is-open class slides it into view. */
+    transform: translateY(100%);
+    transition: transform 0.25s ease;
+    box-shadow: 0 -0.5rem 2rem rgba(0, 0, 0, 0.5);
+}
+
+.tag-sheet.is-open {
+    transform: translateY(0);
+}
+
+.tag-sheet__title {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+}
+
+/* The chosen tags and the recent-piece chips share a wrapping row of pills. */
+.tag-sheet__chosen,
+.tag-sheet__recent {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.tag-sheet__chosen:empty {
+    display: none;
+}
+
+.tag-sheet__chip,
+.tag-sheet__chosen-tag {
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.7rem 1.1rem;
+    border-radius: 999px;
+    min-height: 3rem;
+    touch-action: manipulation;
+}
+
+.tag-sheet__chip {
+    background: #262935;
+    color: var(--fg);
+}
+
+/* A chosen tag wears the accent and shows a × affordance for one-tap removal. */
+.tag-sheet__chosen-tag {
+    background: var(--accent);
+    color: #150a06;
+}
+
+.tag-sheet__chosen-tag::after {
+    content: ' ×';
+    font-weight: 700;
+}
+
+.tag-sheet__input-row {
+    display: flex;
+    gap: 0.6rem;
+}
+
+.tag-sheet__input {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    font: inherit;
+    font-size: 1.1rem;
+    min-height: 3.25rem;
+    padding: 0 1rem;
+    border-radius: 0.75rem;
+    border: 2px solid #333747;
+    background: var(--bg);
+    color: var(--fg);
+}
+
+.tag-sheet__input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.tag-sheet__add {
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0 1.25rem;
+    min-height: 3.25rem;
+    border-radius: 0.75rem;
+    background: #262935;
+    color: var(--fg);
+    touch-action: manipulation;
+}
+
+.tag-sheet__actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.tag-sheet__action {
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex: 1;
+    min-height: 3.75rem;
+    border-radius: 0.9rem;
+    touch-action: manipulation;
+}
+
+.tag-sheet__action--skip {
+    background: transparent;
+    color: var(--fg);
+    box-shadow: inset 0 0 0 2px #333747;
+}
+
+.tag-sheet__action--save {
+    background: var(--accent);
+    color: #150a06;
+}
+
+.tag-sheet__chip:focus-visible,
+.tag-sheet__chosen-tag:focus-visible,
+.tag-sheet__add:focus-visible,
+.tag-sheet__action:focus-visible {
+    outline: 3px solid var(--fg);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tag-sheet,
+    .tag-sheet__backdrop {
+        transition: none;
+    }
+}
