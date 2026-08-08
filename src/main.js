@@ -124,3 +124,15 @@ for (const view of views) {
 
 document.body.appendChild(tabbar);
 show('session');
+
+// Register the service worker so every surface works offline once installed. The
+// script URL resolves against the document (index.html at the repo root), so the
+// worker's scope covers the whole app. It is a module worker because sw.js imports
+// the precache list it shares with the app. Registration failures (an
+// unsupported browser, a blocked context) are swallowed — the app still runs
+// online without it.
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js', { type: 'module' }).catch(() => {});
+    });
+}
