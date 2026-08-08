@@ -48,7 +48,7 @@
   - File: `sw.js`, `manifest.webmanifest`, `index.html`, `src/main.js`
   <!-- id: c9e555e2-768b-4890-8fa6-052e38150a08 -->
 
-- [ ] **[MEDIUM]** Fix favicon not appearing in iOS Safari tabs
+- [x] **[MEDIUM]** Fix favicon not appearing in iOS Safari tabs — Completed: 2026-08-08
   - Type: bug
   - Description: The clock favicon added via `<link rel="icon">` (SVG) renders correctly on desktop browsers but does not display in iOS Safari's tab bar or tab switcher, because iOS Safari has unreliable SVG favicon support and expects a PNG/ICO fallback plus an `apple-touch-icon` link tag. Add a PNG version of the clock icon (e.g. 180x180 for apple-touch-icon, 32x32/16x16 for standard favicon) and reference it with both `<link rel="icon" type="image/png" ...>` and `<link rel="apple-touch-icon" href="...">` tags alongside the existing SVG link so all platforms resolve a working icon. Likely touches the root HTML file and adds new PNG asset files alongside the existing SVG.
   - File: `index.html`
