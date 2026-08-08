@@ -2,6 +2,7 @@
   "files": [
     "greet.js",
     "main.js",
+    "neglect.js",
     "session.js",
     "store.js",
     "style.css",
@@ -9,6 +10,154 @@
   ],
   "srcRoot": "src",
   "regions": [
+    {
+      "selector": "#pieces",
+      "label": "Pieces",
+      "file": "main.js",
+      "line": 46,
+      "files": [
+        {
+          "file": "main.js",
+          "line": 46
+        }
+      ]
+    },
+    {
+      "selector": "#session",
+      "label": "Session",
+      "file": "main.js",
+      "line": 45,
+      "files": [
+        {
+          "file": "main.js",
+          "line": 45
+        }
+      ]
+    },
+    {
+      "selector": ".neglect",
+      "label": "Neglect",
+      "file": "main.js",
+      "line": 20,
+      "files": [
+        {
+          "file": "main.js",
+          "line": 20
+        },
+        {
+          "file": "style.css",
+          "line": 25
+        }
+      ]
+    },
+    {
+      "selector": ".neglect__empty",
+      "label": "Neglect Empty",
+      "file": "neglect.js",
+      "line": 75,
+      "files": [
+        {
+          "file": "neglect.js",
+          "line": 75
+        },
+        {
+          "file": "style.css",
+          "line": 281
+        }
+      ]
+    },
+    {
+      "selector": ".neglect__item",
+      "label": "Neglect Item",
+      "file": "neglect.js",
+      "line": 85,
+      "files": [
+        {
+          "file": "neglect.js",
+          "line": 85
+        }
+      ]
+    },
+    {
+      "selector": ".neglect__list",
+      "label": "Neglect List",
+      "file": "neglect.js",
+      "line": 82,
+      "files": [
+        {
+          "file": "neglect.js",
+          "line": 82
+        },
+        {
+          "file": "style.css",
+          "line": 288
+        }
+      ]
+    },
+    {
+      "selector": ".neglect__name",
+      "label": "Neglect Name",
+      "file": "neglect.js",
+      "line": 92,
+      "files": [
+        {
+          "file": "neglect.js",
+          "line": 92
+        },
+        {
+          "file": "style.css",
+          "line": 330
+        }
+      ]
+    },
+    {
+      "selector": ".neglect__piece",
+      "label": "Neglect Piece",
+      "file": "neglect.js",
+      "line": 89,
+      "files": [
+        {
+          "file": "neglect.js",
+          "line": 89
+        },
+        {
+          "file": "style.css",
+          "line": 300
+        }
+      ]
+    },
+    {
+      "selector": ".neglect__title",
+      "label": "Neglect Title",
+      "file": "main.js",
+      "line": 25,
+      "files": [
+        {
+          "file": "main.js",
+          "line": 25
+        },
+        {
+          "file": "style.css",
+          "line": 275
+        }
+      ]
+    },
+    {
+      "selector": ".neglect__when",
+      "label": "Neglect When",
+      "file": "neglect.js",
+      "line": 96,
+      "files": [
+        {
+          "file": "neglect.js",
+          "line": 96
+        },
+        {
+          "file": "style.css",
+          "line": 335
+        }
+      ]
+    },
     {
       "selector": ".session__control",
       "label": "Session Control",
@@ -21,7 +170,7 @@
         },
         {
           "file": "style.css",
-          "line": 45
+          "line": 53
         }
       ]
     },
@@ -37,7 +186,39 @@
         },
         {
           "file": "style.css",
-          "line": 36
+          "line": 44
+        }
+      ]
+    },
+    {
+      "selector": ".tabbar",
+      "label": "Tabbar",
+      "file": "main.js",
+      "line": 41,
+      "files": [
+        {
+          "file": "main.js",
+          "line": 41
+        },
+        {
+          "file": "style.css",
+          "line": 345
+        }
+      ]
+    },
+    {
+      "selector": ".tabbar__tab",
+      "label": "Tabbar Tab",
+      "file": "main.js",
+      "line": 67,
+      "files": [
+        {
+          "file": "main.js",
+          "line": 67
+        },
+        {
+          "file": "style.css",
+          "line": 357
         }
       ]
     },
@@ -53,7 +234,7 @@
         },
         {
           "file": "style.css",
-          "line": 105
+          "line": 113
         }
       ]
     },
@@ -69,7 +250,7 @@
         },
         {
           "file": "style.css",
-          "line": 221
+          "line": 229
         }
       ]
     },
@@ -85,7 +266,7 @@
         },
         {
           "file": "style.css",
-          "line": 215
+          "line": 223
         }
       ]
     },
@@ -101,7 +282,7 @@
         },
         {
           "file": "style.css",
-          "line": 199
+          "line": 207
         }
       ]
     },
@@ -117,7 +298,7 @@
         },
         {
           "file": "style.css",
-          "line": 90
+          "line": 98
         }
       ]
     },
@@ -133,7 +314,7 @@
         },
         {
           "file": "style.css",
-          "line": 144
+          "line": 152
         }
       ]
     },
@@ -149,7 +330,7 @@
         },
         {
           "file": "style.css",
-          "line": 133
+          "line": 141
         }
       ]
     },
@@ -165,7 +346,7 @@
         },
         {
           "file": "style.css",
-          "line": 145
+          "line": 153
         }
       ]
     },
@@ -181,7 +362,7 @@
         },
         {
           "file": "style.css",
-          "line": 180
+          "line": 188
         }
       ]
     },
@@ -197,7 +378,7 @@
         },
         {
           "file": "style.css",
-          "line": 175
+          "line": 183
         }
       ]
     },
@@ -213,7 +394,7 @@
         },
         {
           "file": "style.css",
-          "line": 134
+          "line": 142
         }
       ]
     },
@@ -229,7 +410,7 @@
         },
         {
           "file": "style.css",
-          "line": 126
+          "line": 134
         }
       ]
     }
