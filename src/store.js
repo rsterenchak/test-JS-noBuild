@@ -7,6 +7,12 @@
 // rather than throwing, so a surface never has to guard against a bad read.
 
 const STORAGE_KEY = 'practicelog:sessions:v1';
+// The in-progress session lives under its own key: a single start timestamp,
+// nothing more. Keeping it separate from the completed-session list means the
+// running session is recovered from storage on every read, so a locked screen,
+// a backgrounded app, or a killed-and-reopened tab resumes with the correct
+// elapsed time instead of losing it.
+const ACTIVE_KEY = 'practicelog:active:v1';
 
 // Resolved lazily on every call so tests (and the browser) can install or swap
 // the localStorage implementation without this module capturing a stale handle.
@@ -111,4 +117,41 @@ export function pieceByName(name) {
     const target = name.trim();
     if (!target) return null;
     return listPieces().find((piece) => piece.name === target) ?? null;
+}
+
+// The in-progress session, or null when nothing is running. A missing key or a
+// value without a numeric `start` degrades to null, matching the store's rule
+// that a bad read never throws.
+export function getActiveSession() {
+    try {
+        const raw = storage()?.getItem(ACTIVE_KEY);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        return parsed && typeof parsed.start === 'number' ? parsed : null;
+    } catch {
+        return null;
+    }
+}
+
+// Begin a session by persisting only its start timestamp. Elapsed time is later
+// derived from this stored value rather than accumulated, so time is never lost
+// while the tab is backgrounded or closed. Returns the active record.
+export function startActiveSession(start = Date.now()) {
+    const record = { start: typeof start === 'number' ? start : Date.now() };
+    storage().setItem(ACTIVE_KEY, JSON.stringify(record));
+    return record;
+}
+
+// End the in-progress session: record it as a completed session through the
+// normal session store, clear the active marker, and return the stored record.
+// Returns null when there is no active session to stop.
+export function stopActiveSession(end = Date.now(), pieces = []) {
+    const active = getActiveSession();
+    if (!active) return null;
+    storage().removeItem(ACTIVE_KEY);
+    return addSession({
+        start: active.start,
+        end: typeof end === 'number' ? end : Date.now(),
+        pieces,
+    });
 }
