@@ -2,6 +2,7 @@
   "files": [
     "greet.js",
     "main.js",
+    "store.js",
     "style.css"
   ],
   "srcRoot": "src",
