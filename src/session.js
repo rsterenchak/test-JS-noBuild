@@ -8,6 +8,7 @@
 // repaint; a tab that is backgrounded, locked, or killed and reopened resumes
 // with the correct time because the number is derived from storage each render.
 import { startActiveSession, stopActiveSession, getActiveSession } from './store.js';
+import { openTagSheet } from './tagSheet.js';
 
 // Format elapsed milliseconds as M:SS, widening to H:MM:SS past an hour.
 // Negative input (a clock skewing backwards) clamps to zero rather than showing
@@ -72,9 +73,12 @@ export function initSession(root) {
     }
 
     function handleStop() {
-        stopActiveSession();
+        // Record the completed session first — untagged, so it counts even if the
+        // tag sheet is skipped — then slide the sheet up to attach pieces to it.
+        const completed = stopActiveSession();
         stopTicker();
         render();
+        if (completed) openTagSheet(completed.id);
     }
 
     function render() {

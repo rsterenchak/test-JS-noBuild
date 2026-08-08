@@ -12,7 +12,7 @@
   - File: `src/session.js`, `src/main.js`, `index.html`, `src/style.css`
   <!-- id: df0a007e-77c3-4c7f-bb39-c8b5ad03267a -->
 
-- [ ] **[MEDIUM]** Add the tag sheet that slides up after stopping a session
+- [x] **[MEDIUM]** Add the tag sheet that slides up after stopping a session — Completed: 2026-08-08
   - Type: feature
   - Description: After a session stops, slide up a sheet to tag the pieces worked on, chosen from recent piece names or typed fresh. The sheet is skippable: dismissing it leaves the session recorded but untagged, and an untagged session still counts toward total practice. Persist the chosen tags onto the just-completed session via `src/store.js`. Large thumb-reachable controls; the sheet must be dismissable one-handed. Depends on the data layer and session screen.
   - File: `src/tagSheet.js`, `src/session.js`, `src/style.css`

@@ -2,6 +2,7 @@ import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import {
     addSession,
+    setSessionPieces,
     listSessions,
     listPieces,
     pieceByName,
@@ -51,6 +52,30 @@ test('addSession normalizes tagged piece names', () => {
         pieces: ['  Etude  ', 'Etude', '', 42, 'Nocturne'],
     });
     assert.deepEqual(stored.pieces, ['Etude', 'Nocturne']);
+});
+
+test('setSessionPieces attaches tags to an already-recorded session', () => {
+    const stored = addSession({ start: 1000, end: 4000 });
+    assert.deepEqual(stored.pieces, [], 'recorded untagged');
+
+    const updated = setSessionPieces(stored.id, ['  Prelude  ', 'Prelude', '', 'Fugue']);
+    assert.deepEqual(updated.pieces, ['Prelude', 'Fugue'], 'names are normalized');
+
+    // The other fields are untouched and the change is persisted.
+    assert.equal(updated.id, stored.id);
+    assert.equal(updated.duration, 3000);
+    assert.deepEqual(listSessions()[0].pieces, ['Prelude', 'Fugue']);
+
+    // Pieces re-derive from the freshly tagged session.
+    assert.equal(pieceByName('Prelude').lastPractised, 4000);
+    assert.equal(pieceByName('Fugue').totalTime, 3000);
+});
+
+test('setSessionPieces is a no-op for an unknown id', () => {
+    addSession({ start: 0, end: 1, pieces: ['Sonata'] });
+    assert.equal(setSessionPieces('no-such-id', ['Etude']), null);
+    assert.deepEqual(listSessions()[0].pieces, ['Sonata'], 'existing session untouched');
+    assert.equal(pieceByName('Etude'), null);
 });
 
 test('pieces are derived and aggregated across tagged sessions', () => {

@@ -82,6 +82,22 @@ export function addSession(session = {}) {
     return record;
 }
 
+// Replace the tags on an already-recorded session, identified by its id. The tag
+// sheet uses this to attach pieces to the session that just completed: the
+// session is recorded untagged on stop (so it counts even if tagging is skipped)
+// and this fills in the pieces afterwards. Names are normalized exactly as at
+// creation, so derived pieces stay consistent. An unknown id is a no-op that
+// returns null; the updated record is returned otherwise.
+export function setSessionPieces(id, pieces) {
+    const sessions = readSessions();
+    const index = sessions.findIndex((session) => session.id === id);
+    if (index === -1) return null;
+    const updated = { ...sessions[index], pieces: normalizePieces(pieces) };
+    sessions[index] = updated;
+    writeSessions(sessions);
+    return updated;
+}
+
 // All stored sessions, oldest first (insertion order).
 export function listSessions() {
     return readSessions();
