@@ -54,7 +54,7 @@
   - File: `index.html`
   <!-- id: e1391474-679f-4af2-bc90-0c390c645c6c -->
 
-- [ ] **[HIGH]** Fix favicon PNG assets rendering as solid black instead of the clock icon
+- [x] **[HIGH]** Fix favicon PNG assets rendering as solid black instead of the clock icon — Completed: 2026-08-08
   - Type: bug
   - Description: `favicon-32.png`, `favicon-16.png`, and `apple-touch-icon.png` (added in PR #9) pass structural validation (valid PNG signature, correct IHDR dimensions) but render as solid black squares when opened directly — they contain no visible clock artwork, which is why iOS Safari falls back to its generic globe icon on the Practice Log tab instead of showing a favicon. Regenerate all three PNGs by actually rasterizing the existing `favicon.svg` clock design (white face, black outline, black hands, red second hand, tick marks) at 180x180, 32x32, and 16x16, rather than emitting blank/placeholder image data. Also strengthen `tests/favicon.test.js` to catch this class of failure going forward — e.g. assert the decoded pixel data isn't a single uniform color (checking for at least a handful of distinct RGB values, or that white and black pixels both appear) so a blank asset can't silently pass again.
   - File: `favicon-32.png`, `favicon-16.png`, `apple-touch-icon.png`, `favicon.svg`, `tests/favicon.test.js`
