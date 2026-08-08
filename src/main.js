@@ -9,6 +9,7 @@
 // shown, so a session just recorded on the other tab is reflected immediately.
 import { initSession } from './session.js';
 import { initNeglect } from './neglect.js';
+import { initHistory } from './history.js';
 
 const app = document.getElementById('app');
 initSession(app);
@@ -34,6 +35,26 @@ document.body.appendChild(neglectView);
 // surface, not yet built) can wire itself in without this file changing.
 const neglect = initNeglect(neglectRoot, { onOpenPiece: undefined });
 
+// The history list lives in its own full-screen panel too, hidden until its tab
+// is selected. It is a plain record of past sessions — deliberately not a place
+// to navigate off of — and is re-read from the store each time it is shown so a
+// session just recorded elsewhere appears immediately.
+const historyView = document.createElement('section');
+historyView.className = 'history';
+historyView.setAttribute('aria-label', 'Practice history');
+historyView.hidden = true;
+
+const historyTitle = document.createElement('h1');
+historyTitle.className = 'history__title';
+historyTitle.textContent = 'History';
+historyView.appendChild(historyTitle);
+
+const historyRoot = document.createElement('div');
+historyView.appendChild(historyRoot);
+document.body.appendChild(historyView);
+
+const history = initHistory(historyRoot);
+
 // Bottom tab bar. It never wears the accent colour — that is reserved for the
 // recording state on the session screen, so its presence alone answers "am I
 // recording"; a tab bar using it would break that signal.
@@ -44,6 +65,7 @@ tabbar.setAttribute('aria-label', 'Views');
 const views = [
     { id: 'session', label: 'Session', el: app },
     { id: 'pieces', label: 'Pieces', el: neglectView },
+    { id: 'history', label: 'History', el: historyView },
 ];
 
 function show(id) {
@@ -56,9 +78,10 @@ function show(id) {
         if (active) tab.setAttribute('aria-current', 'page');
         else tab.removeAttribute('aria-current');
     }
-    // Re-read the store so the list reflects any session recorded since it was
+    // Re-read the store so each list reflects any session recorded since it was
     // last shown.
     if (id === 'pieces') neglect.refresh();
+    if (id === 'history') history.refresh();
 }
 
 for (const view of views) {

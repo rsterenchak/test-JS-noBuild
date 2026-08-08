@@ -22,7 +22,8 @@ body {
    view classes below set `display`, which would otherwise override the UA
    [hidden] { display: none } and leave a "hidden" view still on screen. */
 .session[hidden],
-.neglect[hidden] {
+.neglect[hidden],
+.history[hidden] {
     display: none;
 }
 
@@ -339,9 +340,98 @@ body {
     font-variant-numeric: tabular-nums;
 }
 
-/* Bottom tab bar switching between the session screen and the neglect list. It
-   deliberately avoids the accent colour so the accent keeps meaning "recording"
-   and nothing else. */
+/* The history list: past sessions newest-first. A plain scrolling column, no tap
+   targets — it exists so nothing feels lost, not to be browsed. Shares the
+   neglect list's spacing so both full-screen panels sit the same under the tab
+   bar. */
+.history {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding:
+        max(2rem, env(safe-area-inset-top)) 1.25rem
+        calc(5.5rem + env(safe-area-inset-bottom));
+}
+
+.history__title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.history__empty {
+    margin: 0;
+    color: #9a9cae;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.history__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+/* Each session is a static card: date and duration on one line, tags below. */
+.history__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.1rem 1.25rem;
+    border-radius: 0.9rem;
+    background: var(--surface);
+}
+
+.history__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.history__date {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.history__duration {
+    flex: none;
+    font-size: 1rem;
+    color: #9a9cae;
+    font-variant-numeric: tabular-nums;
+}
+
+.history__tags {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.history__tag {
+    font-size: 0.95rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--fg);
+}
+
+.history__untagged {
+    font-size: 0.95rem;
+    color: #9a9cae;
+    font-style: italic;
+}
+
+/* Bottom tab bar switching between the session screen, the neglect list, and the
+   history view. It deliberately avoids the accent colour so the accent keeps
+   meaning "recording" and nothing else. */
 .tabbar {
     position: fixed;
     left: 0;
