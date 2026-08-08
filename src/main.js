@@ -10,6 +10,7 @@
 import { initSession } from './session.js';
 import { initNeglect } from './neglect.js';
 import { initHistory } from './history.js';
+import { initPieceDetail } from './pieceDetail.js';
 
 const app = document.getElementById('app');
 initSession(app);
@@ -31,9 +32,8 @@ const neglectRoot = document.createElement('div');
 neglectView.appendChild(neglectRoot);
 document.body.appendChild(neglectView);
 
-// Each piece routes through onOpenPiece so the piece-detail view (a separate
-// surface, not yet built) can wire itself in without this file changing.
-const neglect = initNeglect(neglectRoot, { onOpenPiece: undefined });
+// Each piece routes through onOpenPiece into the piece-detail surface below.
+const neglect = initNeglect(neglectRoot, { onOpenPiece: openPiece });
 
 // The history list lives in its own full-screen panel too, hidden until its tab
 // is selected. It is a plain record of past sessions — deliberately not a place
@@ -55,6 +55,31 @@ document.body.appendChild(historyView);
 
 const history = initHistory(historyRoot);
 
+// The piece-detail view: a full-screen panel showing one piece's totals and the
+// sessions that tagged it. It is not a tab — it is reached by tapping a piece in
+// the neglect list — so it lives outside the `views` array and is shown by
+// openPiece / hidden by show(). Its back control returns to the neglect list.
+const pieceView = document.createElement('section');
+pieceView.className = 'piece';
+pieceView.setAttribute('aria-label', 'Piece detail');
+pieceView.hidden = true;
+
+const pieceRoot = document.createElement('div');
+pieceView.appendChild(pieceRoot);
+document.body.appendChild(pieceView);
+
+const pieceDetail = initPieceDetail(pieceRoot, { onBack: () => show('pieces') });
+
+// Open the piece-detail surface for a name: hide every tab view, reveal the
+// detail panel, and render that piece. The tab bar keeps its current highlight
+// (the pieces tab, since that is where a piece is tapped from), so returning via
+// Back lands back on the neglect list.
+function openPiece(name) {
+    for (const view of views) view.el.hidden = true;
+    pieceView.hidden = false;
+    pieceDetail.open(name);
+}
+
 // Bottom tab bar. It never wears the accent colour — that is reserved for the
 // recording state on the session screen, so its presence alone answers "am I
 // recording"; a tab bar using it would break that signal.
@@ -69,6 +94,9 @@ const views = [
 ];
 
 function show(id) {
+    // Leaving any tab always closes the piece-detail surface, which sits over the
+    // tab views rather than in the `views` array.
+    pieceView.hidden = true;
     for (const view of views) {
         view.el.hidden = view.id !== id;
     }

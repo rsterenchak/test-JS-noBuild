@@ -23,7 +23,8 @@ body {
    [hidden] { display: none } and leave a "hidden" view still on screen. */
 .session[hidden],
 .neglect[hidden],
-.history[hidden] {
+.history[hidden],
+.piece[hidden] {
     display: none;
 }
 
@@ -427,6 +428,118 @@ body {
     font-size: 0.95rem;
     color: #9a9cae;
     font-style: italic;
+}
+
+/* The piece-detail view: one piece's totals and the sessions that tagged it.
+   Reached by tapping a piece in the neglect list, so it leads with a Back
+   control and shares the full-screen panels' spacing to sit the same under the
+   tab bar. */
+.piece {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding:
+        max(2rem, env(safe-area-inset-top)) 1.25rem
+        calc(5.5rem + env(safe-area-inset-bottom));
+}
+
+/* A quiet back affordance — no accent, so the accent keeps meaning "recording". */
+.piece__back {
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    font-size: 1.05rem;
+    align-self: flex-start;
+    padding: 0.6rem 0.9rem 0.6rem 0;
+    background: transparent;
+    color: #9a9cae;
+    touch-action: manipulation;
+}
+
+.piece__back:focus-visible {
+    outline: 3px solid var(--fg);
+    outline-offset: 3px;
+}
+
+.piece__title {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    word-break: break-word;
+}
+
+.piece__empty {
+    margin: 0;
+    color: #9a9cae;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+/* The three headline stats — total time, last practised, session count — as a
+   wrapping row of cells over the session list. */
+.piece__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.piece__stat {
+    flex: 1 1 8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 1rem 1.1rem;
+    border-radius: 0.9rem;
+    background: var(--surface);
+}
+
+.piece__stat-label {
+    font-size: 0.9rem;
+    color: #9a9cae;
+}
+
+.piece__stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.piece__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+/* Each session that tagged the piece: date on the left, duration on the right —
+   a static record, matching the history list's plain cards. */
+.piece__item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    border-radius: 0.9rem;
+    background: var(--surface);
+}
+
+.piece__date {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.piece__duration {
+    flex: none;
+    font-size: 1rem;
+    color: #9a9cae;
+    font-variant-numeric: tabular-nums;
 }
 
 /* Bottom tab bar switching between the session screen, the neglect list, and the
