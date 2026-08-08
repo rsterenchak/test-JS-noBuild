@@ -4,7 +4,8 @@
     "main.js",
     "session.js",
     "store.js",
-    "style.css"
+    "style.css",
+    "tagSheet.js"
   ],
   "srcRoot": "src",
   "regions": [
@@ -12,11 +13,11 @@
       "selector": ".session__control",
       "label": "Session Control",
       "file": "session.js",
-      "line": 96,
+      "line": 100,
       "files": [
         {
           "file": "session.js",
-          "line": 96
+          "line": 100
         },
         {
           "file": "style.css",
@@ -28,15 +29,207 @@
       "selector": ".session__elapsed",
       "label": "Session Elapsed",
       "file": "session.js",
-      "line": 87,
+      "line": 91,
       "files": [
         {
           "file": "session.js",
-          "line": 87
+          "line": 91
         },
         {
           "file": "style.css",
           "line": 36
+        }
+      ]
+    },
+    {
+      "selector": ".tag-sheet",
+      "label": "Tag Sheet",
+      "file": "tagSheet.js",
+      "line": 50,
+      "files": [
+        {
+          "file": "tagSheet.js",
+          "line": 50
+        },
+        {
+          "file": "style.css",
+          "line": 105
+        }
+      ]
+    },
+    {
+      "selector": ".tag-sheet__action",
+      "label": "Tag Sheet Action",
+      "file": "tagSheet.js",
+      "line": 133,
+      "files": [
+        {
+          "file": "tagSheet.js",
+          "line": 133
+        },
+        {
+          "file": "style.css",
+          "line": 221
+        }
+      ]
+    },
+    {
+      "selector": ".tag-sheet__actions",
+      "label": "Tag Sheet Actions",
+      "file": "tagSheet.js",
+      "line": 129,
+      "files": [
+        {
+          "file": "tagSheet.js",
+          "line": 129
+        },
+        {
+          "file": "style.css",
+          "line": 215
+        }
+      ]
+    },
+    {
+      "selector": ".tag-sheet__add",
+      "label": "Tag Sheet Add",
+      "file": "tagSheet.js",
+      "line": 114,
+      "files": [
+        {
+          "file": "tagSheet.js",
+          "line": 114
+        },
+        {
+          "file": "style.css",
+          "line": 199
+        }
+      ]
+    },
+    {
+      "selector": ".tag-sheet__backdrop",
+      "label": "Tag Sheet Backdrop",
+      "file": "tagSheet.js",
+      "line": 47,
+      "files": [
+        {
+          "file": "tagSheet.js",
+          "line": 47
+        },
+        {
+          "file": "style.css",
+          "line": 90
+        }
+      ]
+    },
+    {
+      "selector": ".tag-sheet__chip",
+      "label": "Tag Sheet Chip",
+      "file": "tagSheet.js",
+      "line": 95,
+      "files": [
+        {
+          "file": "tagSheet.js",
+          "line": 95
+        },
+        {
+          "file": "style.css",
+          "line": 144
+        }
+      ]
+    },
+    {
+      "selector": ".tag-sheet__chosen",
+      "label": "Tag Sheet Chosen",
+      "file": "tagSheet.js",
+      "line": 63,
+      "files": [
+        {
+          "file": "tagSheet.js",
+          "line": 63
+        },
+        {
+          "file": "style.css",
+          "line": 133
+        }
+      ]
+    },
+    {
+      "selector": ".tag-sheet__chosen-tag",
+      "label": "Tag Sheet Chosen Tag",
+      "file": "tagSheet.js",
+      "line": 71,
+      "files": [
+        {
+          "file": "tagSheet.js",
+          "line": 71
+        },
+        {
+          "file": "style.css",
+          "line": 145
+        }
+      ]
+    },
+    {
+      "selector": ".tag-sheet__input",
+      "label": "Tag Sheet Input",
+      "file": "tagSheet.js",
+      "line": 108,
+      "files": [
+        {
+          "file": "tagSheet.js",
+          "line": 108
+        },
+        {
+          "file": "style.css",
+          "line": 180
+        }
+      ]
+    },
+    {
+      "selector": ".tag-sheet__input-row",
+      "label": "Tag Sheet Input Row",
+      "file": "tagSheet.js",
+      "line": 105,
+      "files": [
+        {
+          "file": "tagSheet.js",
+          "line": 105
+        },
+        {
+          "file": "style.css",
+          "line": 175
+        }
+      ]
+    },
+    {
+      "selector": ".tag-sheet__recent",
+      "label": "Tag Sheet Recent",
+      "file": "tagSheet.js",
+      "line": 91,
+      "files": [
+        {
+          "file": "tagSheet.js",
+          "line": 91
+        },
+        {
+          "file": "style.css",
+          "line": 134
+        }
+      ]
+    },
+    {
+      "selector": ".tag-sheet__title",
+      "label": "Tag Sheet Title",
+      "file": "tagSheet.js",
+      "line": 56,
+      "files": [
+        {
+          "file": "tagSheet.js",
+          "line": 56
+        },
+        {
+          "file": "style.css",
+          "line": 126
         }
       ]
     }
