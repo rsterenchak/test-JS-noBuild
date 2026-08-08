@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Static site served straight from the repo — no build step.",
+  "description": "Static site served straight from the repo \u2014 no build step.",
   "scripts": {
-    "test:run": "node --test tests/"
+    "test:run": "node --test"
   }
 }
