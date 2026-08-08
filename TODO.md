@@ -29,3 +29,9 @@
   - Description: List pieces ordered by how long since each was last practised, longest-neglected first — the app's actual answer to "what should I work on". Read pieces and their last-practised timestamps from `src/store.js`; show each piece's name and a relative "last practised" label. Tapping a piece opens its piece-detail view. This directly serves the goal a chronological list answers worst, so it should be reachable prominently, not buried. Depends on the data layer.
   - File: `src/neglect.js`, `src/main.js`, `src/style.css`
   <!-- id: 931fb283-fabc-43cd-b455-01e4fada8307 -->
+
+- [ ] **[LOW]** Add the history view listing sessions in reverse chronological order
+  - Type: feature
+  - Description: Show past sessions newest-first, each with its date, duration, and tags, read from `src/store.js`. Deliberately plain — it exists so nothing feels lost, not to be browsed, so no filtering or search. Depends on the data layer.
+  - File: `src/history.js`, `src/main.js`, `src/style.css`
+  <!-- id: f62072c2-ca28-4cd4-adaf-9420edd5309d -->
