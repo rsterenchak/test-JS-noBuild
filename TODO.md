@@ -36,7 +36,7 @@
   - File: `src/history.js`, `src/main.js`, `src/style.css`
   <!-- id: f62072c2-ca28-4cd4-adaf-9420edd5309d -->
 
-- [ ] **[LOW]** Add the piece-detail view for a single piece's totals and sessions
+- [x] **[LOW]** Add the piece-detail view for a single piece's totals and sessions — Completed: 2026-08-08
   - Type: feature
   - Description: Show one piece's total practised time, last-practised date, and the list of sessions that tagged it, read from `src/store.js`. Reached from the neglect list or from a tag. Depends on the data layer, neglect list, and tag sheet.
   - File: `src/pieceDetail.js`, `src/main.js`, `src/style.css`
