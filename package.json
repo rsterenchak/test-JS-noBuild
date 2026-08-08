@@ -1,0 +1,10 @@
+{
+  "name": "template-served-from-source",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Static site served straight from the repo — no build step.",
+  "scripts": {
+    "test:run": "node --test tests/"
+  }
+}
