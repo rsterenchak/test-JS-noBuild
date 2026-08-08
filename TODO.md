@@ -42,7 +42,7 @@
   - File: `src/pieceDetail.js`, `src/main.js`, `src/style.css`
   <!-- id: d9b01c25-3547-4a46-9e4a-d27a33466a83 -->
 
-- [ ] **[MEDIUM]** Make the app installable and fully offline with a web manifest and service worker
+- [x] **[MEDIUM]** Make the app installable and fully offline with a web manifest and service worker — Completed: 2026-08-08
   - Type: feature
   - Description: Add a web app manifest (name, icons, dark theme colour, standalone display) and a service worker that precaches `index.html` and the `src/` ES modules and styles so every surface works with no network — practice happens in a basement with no signal. No build step: hand-write `sw.js` and `manifest.webmanifest` as static files the browser gets directly, and register the service worker from `src/main.js`. Keep the precache list in sync with the served-from-source file set. Serves the offline-first constraint and the installable mobile-web requirement.
   - File: `sw.js`, `manifest.webmanifest`, `index.html`, `src/main.js`
