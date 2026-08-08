@@ -24,7 +24,7 @@
   - File: `index.html`, `src/style.css`
   <!-- id: b0516813-c100-415d-b208-31275a7b9f9f -->
 
-- [ ] **[MEDIUM]** Build the neglect list ordering pieces by time since last practised
+- [x] **[MEDIUM]** Build the neglect list ordering pieces by time since last practised — Completed: 2026-08-08
   - Type: feature
   - Description: List pieces ordered by how long since each was last practised, longest-neglected first — the app's actual answer to "what should I work on". Read pieces and their last-practised timestamps from `src/store.js`; show each piece's name and a relative "last practised" label. Tapping a piece opens its piece-detail view. This directly serves the goal a chronological list answers worst, so it should be reachable prominently, not buried. Depends on the data layer.
   - File: `src/neglect.js`, `src/main.js`, `src/style.css`
