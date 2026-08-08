@@ -6,7 +6,7 @@
   - File: `src/store.js`, `tests/store.test.js`
   <!-- id: e110ed9b-552a-4086-9176-54be03b50f5e -->
 
-- [ ] **[HIGH]** Build the session screen with one-tap start/stop and a timestamp-derived elapsed timer
+- [x] **[HIGH]** Build the session screen with one-tap start/stop and a timestamp-derived elapsed timer — Completed: 2026-08-08
   - Type: feature
   - Description: Make the default view a single large start control that begins a session in one tap from app open, with no setup or selection first. Once active, show the running elapsed time and a stop control, the active state marked by the single accent colour so "am I recording" reads from across the room. Derive elapsed time from a start timestamp stored in `localStorage` (via `src/store.js`), NOT an interval counter, so a locked screen, backgrounded app, or killed-and-reopened tab resumes the session with the correct time instead of losing it. On stop, record the completed session through the data layer. The referenced mockup `docs/mockups/session-screen.html` does not exist yet, so follow the Look and feel section (dark, high contrast, large thumb-reachable targets, mostly empty space) for structure rather than a pixel layout. Wire the view from `src/main.js`.
   - File: `src/session.js`, `src/main.js`, `index.html`, `src/style.css`
