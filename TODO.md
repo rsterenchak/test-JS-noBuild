@@ -23,3 +23,9 @@
   - Description: The site currently has no custom favicon. Add a classic analog clock icon (white face, black outline, black hour/minute hands, red second hand, tick marks at 12/3/6/9) as an inline SVG favicon referenced via a `<link rel="icon">` tag in the HTML head. Colors should be realistic/naturalistic (white, black, red) rather than the app's purple theme tokens, since this is a standalone browser-tab icon, not in-app UI. Likely touches the root HTML file and may add a new small SVG asset file.
   - File: `index.html`, `src/style.css`
   <!-- id: b0516813-c100-415d-b208-31275a7b9f9f -->
+
+- [ ] **[MEDIUM]** Build the neglect list ordering pieces by time since last practised
+  - Type: feature
+  - Description: List pieces ordered by how long since each was last practised, longest-neglected first — the app's actual answer to "what should I work on". Read pieces and their last-practised timestamps from `src/store.js`; show each piece's name and a relative "last practised" label. Tapping a piece opens its piece-detail view. This directly serves the goal a chronological list answers worst, so it should be reachable prominently, not buried. Depends on the data layer.
+  - File: `src/neglect.js`, `src/main.js`, `src/style.css`
+  <!-- id: 931fb283-fabc-43cd-b455-01e4fada8307 -->
