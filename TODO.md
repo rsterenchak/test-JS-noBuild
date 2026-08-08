@@ -53,3 +53,9 @@
   - Description: The clock favicon added via `<link rel="icon">` (SVG) renders correctly on desktop browsers but does not display in iOS Safari's tab bar or tab switcher, because iOS Safari has unreliable SVG favicon support and expects a PNG/ICO fallback plus an `apple-touch-icon` link tag. Add a PNG version of the clock icon (e.g. 180x180 for apple-touch-icon, 32x32/16x16 for standard favicon) and reference it with both `<link rel="icon" type="image/png" ...>` and `<link rel="apple-touch-icon" href="...">` tags alongside the existing SVG link so all platforms resolve a working icon. Likely touches the root HTML file and adds new PNG asset files alongside the existing SVG.
   - File: `index.html`
   <!-- id: e1391474-679f-4af2-bc90-0c390c645c6c -->
+
+- [ ] **[HIGH]** Fix favicon PNG assets rendering as solid black instead of the clock icon
+  - Type: bug
+  - Description: `favicon-32.png`, `favicon-16.png`, and `apple-touch-icon.png` (added in PR #9) pass structural validation (valid PNG signature, correct IHDR dimensions) but render as solid black squares when opened directly — they contain no visible clock artwork, which is why iOS Safari falls back to its generic globe icon on the Practice Log tab instead of showing a favicon. Regenerate all three PNGs by actually rasterizing the existing `favicon.svg` clock design (white face, black outline, black hands, red second hand, tick marks) at 180x180, 32x32, and 16x16, rather than emitting blank/placeholder image data. Also strengthen `tests/favicon.test.js` to catch this class of failure going forward — e.g. assert the decoded pixel data isn't a single uniform color (checking for at least a handful of distinct RGB values, or that white and black pixels both appear) so a blank asset can't silently pass again.
+  - File: `favicon-32.png`, `favicon-16.png`, `apple-touch-icon.png`, `favicon.svg`, `tests/favicon.test.js`
+  <!-- id: ec052a08-923e-464e-9017-9883b45bfe16 -->
