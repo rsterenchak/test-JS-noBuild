@@ -1,11 +1,86 @@
-:root { color-scheme: dark; }
+:root {
+    color-scheme: dark;
+    --bg: #0d0e13;
+    --fg: #e8e9f0;
+    --surface: #1a1c25;
+    /* The single accent colour. It appears ONLY while a session is recording,
+       so its presence answers "am I recording" from across the room. */
+    --accent: #ff5c39;
+}
+
+* { box-sizing: border-box; }
+
 body {
     margin: 0;
     min-height: 100vh;
+    font-family: system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+}
+
+/* The session screen: mostly empty space, its one control centred and large
+   enough to hit one-handed while holding a guitar. */
+.session {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1.5rem, 6vh, 3rem);
+    padding:
+        max(2rem, env(safe-area-inset-top)) 1.5rem
+        max(2.5rem, env(safe-area-inset-bottom));
+}
+
+.session__elapsed {
+    font-size: clamp(3.5rem, 22vw, 7rem);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--accent);
+}
+
+.session__control {
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    font-size: clamp(1.75rem, 8vw, 2.75rem);
+    letter-spacing: 0.01em;
+    width: min(72vw, 18rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
     display: grid;
     place-items: center;
-    font-family: system-ui, sans-serif;
-    background: #0d0e13;
-    color: #e8e9f0;
+    touch-action: manipulation;
+    transition: transform 0.06s ease, filter 0.06s ease;
 }
-h1 { font-weight: 600; letter-spacing: -0.02em; }
+
+.session__control:active {
+    transform: scale(0.97);
+}
+
+.session__control:focus-visible {
+    outline: 3px solid var(--fg);
+    outline-offset: 4px;
+}
+
+/* Idle: a neutral surface. No accent, because nothing is recording. */
+.session__control--start {
+    background: var(--surface);
+    color: var(--fg);
+}
+
+/* Recording: the accent, matching the elapsed time above it. */
+.session__control--stop {
+    background: var(--accent);
+    color: #150a06;
+}
+
+.session__control--stop:focus-visible {
+    outline-color: var(--accent);
+}
