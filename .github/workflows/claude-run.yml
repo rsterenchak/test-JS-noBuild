@@ -1,0 +1,120 @@
+name: Claude run
+# correlation_id is echoed here so the Worker can find this run by name
+# (workflow_dispatch does not return a run id to the caller).
+run-name: Claude run ${{ inputs.correlation_id }} · ${{ inputs.mode }}
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: backlog (next eligible task) or entry (single tagged task)
+        type: choice
+        options: [backlog, entry]
+        default: backlog
+      entry_id:
+        description: todo id to target (entry mode only)
+        type: string
+        required: false
+      correlation_id:
+        description: opaque id echoed into run-name for status polling
+        type: string
+        required: false
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write   # required: the action authenticates via OIDC
+concurrency:
+  # one run at a time; a second dispatch queues rather than overlapping
+  group: claude-run
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: anthropics/claude-code-action@v1
+        env:
+          # Authenticates the gh CLI for the routine's PR-create / auto-merge.
+          GH_TOKEN: ${{ github.token }}
+        with:
+          # Subscription auth (Pro/Max) — NOT anthropic_api_key. If an
+          # ANTHROPIC_API_KEY is also present in the env it wins and bills API.
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # --model: Opus 4.8 (draws on plan quota faster than Sonnet).
+          # --dangerously-skip-permissions: required for unattended CI — no
+          #   human to approve npm/git/gh commands. Safe here: ephemeral
+          #   sandboxed runner, work lands via branch + PR, never on main
+          #   directly, and the routine's own constraints bound behavior.
+          claude_args: "--max-turns 150 --model claude-opus-4-8 --dangerously-skip-permissions"
+          # Temporary: surface the agent's full output while we verify a real
+          # task run end-to-end. Remove once it's landing PRs cleanly.
+          show_full_output: true
+          prompt: |
+            You are running an automated code-development routine for this repository.
+            Run mode: ${{ inputs.mode }}
+            Target entry id (entry mode only): ${{ inputs.entry_id }}
+            Read `.claude/routine-base.md` (the universal routine rules) and
+            `.claude/routine.md` (this project's configuration) from the
+            repository, then execute the routine exactly as those files
+            describe, for the run mode above. Complete exactly one task, then
+            exit with the one-paragraph summary the routine specifies.
+      # Refresh the NEXT REFACTOR scan against the post-merge tree. The routine
+      # merges its own PR inside the step above, so main has already moved by the
+      # time this runs. The Worker does the sha check itself, so a run that did
+      # not touch the target file costs one directory listing and no tokens —
+      # only a run that actually changed it pays for a scan.
+      #
+      # OPT-IN. Gated on the repository variable REFACTOR_SCAN_ENABLED, which
+      # must be the exact string `true`. Unset — the default for a fresh repo —
+      # means no scan, so a repo never pays for one it did not ask for. Flip it
+      # on when you want the NEXT REFACTOR card kept current, off the rest of
+      # the time; the card keeps rendering the last stored scan either way, it
+      # just stops advancing. Fails closed: any value other than `true`
+      # (including a typo) disables the scan rather than silently enabling it.
+      #
+      # On-demand counterpart: claude-scan.yml runs the same Worker route when
+      # the Structure tab's refactor card asks for a scan. That workflow is NOT
+      # gated — dispatching it is the request — so turning this variable off does
+      # not take scanning away, it only stops the automatic post-merge one.
+      #
+      # Why CI and not the browser: a scan takes ~90s (Opus, high thinking
+      # effort, ~100k input tokens). The card used to hold that connection open
+      # from the client, which mobile Safari drops — losing the result and the
+      # tokens that produced it. A runner holds it without complaint.
+      #
+      # continue-on-error: the scan is a convenience. A stale card is not worth
+      # failing a run that already shipped its PR successfully.
+      - name: Refresh refactor scan
+        continue-on-error: true
+        env:
+          INJECTOR_URL: ${{ secrets.TODO_INJECTOR_URL }}
+          INJECTOR_SECRET: ${{ secrets.TODO_INJECTOR_SECRET }}
+          REPO: ${{ github.repository }}
+          SCAN_ENABLED: ${{ vars.REFACTOR_SCAN_ENABLED }}
+        run: |
+          # Both guards log their reason rather than skipping the step silently —
+          # a skipped step tells you nothing about why when you read the log later.
+          if [ "$SCAN_ENABLED" != "true" ]; then
+            echo "Refactor scan disabled (REFACTOR_SCAN_ENABLED is '${SCAN_ENABLED:-unset}', expected 'true') — skipping."
+            exit 0
+          fi
+          if [ -z "$INJECTOR_URL" ] || [ -z "$INJECTOR_SECRET" ]; then
+            echo "Injector not configured — skipping refactor scan."
+            exit 0
+          fi
+          # --max-time 180 gives the ~90s scan real headroom without hanging the
+          # job if the Worker never answers.
+          curl -sS --max-time 180 -X POST "$INJECTOR_URL" \
+            -H "Authorization: Bearer $INJECTOR_SECRET" \
+            -H "Content-Type: application/json" \
+            -d "{\"scan\":true,\"repo\":\"$REPO\"}" \
+            -o /tmp/scan.json || { echo "Scan request failed."; exit 0; }
+          jq -r '
+            if .unchanged then "Target file unchanged — no scan needed."
+            elif .all_under_budget then "Every file under budget — nothing to refactor."
+            elif .persisted then "Scan persisted: \(.target_file) — \(.candidates|length) candidates."
+            else "SCAN NOT PERSISTED: \(.persist_error // .error // "unknown")"
+            end
+          ' /tmp/scan.json || { echo "Could not read scan response:"; cat /tmp/scan.json; }
