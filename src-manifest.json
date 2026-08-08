@@ -5,6 +5,7 @@
     "main.js",
     "neglect.js",
     "pieceDetail.js",
+    "precache.js",
     "session.js",
     "store.js",
     "style.css",
