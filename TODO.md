@@ -35,3 +35,9 @@
   - Description: Show past sessions newest-first, each with its date, duration, and tags, read from `src/store.js`. Deliberately plain — it exists so nothing feels lost, not to be browsed, so no filtering or search. Depends on the data layer.
   - File: `src/history.js`, `src/main.js`, `src/style.css`
   <!-- id: f62072c2-ca28-4cd4-adaf-9420edd5309d -->
+
+- [ ] **[LOW]** Add the piece-detail view for a single piece's totals and sessions
+  - Type: feature
+  - Description: Show one piece's total practised time, last-practised date, and the list of sessions that tagged it, read from `src/store.js`. Reached from the neglect list or from a tag. Depends on the data layer, neglect list, and tag sheet.
+  - File: `src/pieceDetail.js`, `src/main.js`, `src/style.css`
+  <!-- id: d9b01c25-3547-4a46-9e4a-d27a33466a83 -->
