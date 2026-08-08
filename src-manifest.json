@@ -2,11 +2,45 @@
   "files": [
     "greet.js",
     "main.js",
+    "session.js",
     "store.js",
     "style.css"
   ],
   "srcRoot": "src",
-  "regions": [],
+  "regions": [
+    {
+      "selector": ".session__control",
+      "label": "Session Control",
+      "file": "session.js",
+      "line": 96,
+      "files": [
+        {
+          "file": "session.js",
+          "line": 96
+        },
+        {
+          "file": "style.css",
+          "line": 45
+        }
+      ]
+    },
+    {
+      "selector": ".session__elapsed",
+      "label": "Session Elapsed",
+      "file": "session.js",
+      "line": 87,
+      "files": [
+        {
+          "file": "session.js",
+          "line": 87
+        },
+        {
+          "file": "style.css",
+          "line": 36
+        }
+      ]
+    }
+  ],
   "hasDom": true,
   "lens": "ui"
 }
