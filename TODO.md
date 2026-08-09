@@ -60,7 +60,7 @@
   - File: `favicon-32.png`, `favicon-16.png`, `apple-touch-icon.png`, `favicon.svg`, `tests/favicon.test.js`
   <!-- id: ec052a08-923e-464e-9017-9883b45bfe16 -->
 
-- [ ] **[LOW]** Add a temporary session-note text input as a keyboard probe for the standalone viewport-shrink bug
+- [x] **[LOW]** Add a temporary session-note text input as a keyboard probe for the standalone viewport-shrink bug — Completed: 2026-08-09
   - Type: feature
   - Description: Diagnostic probe, intended to be removable. This app currently has no text inputs anywhere, so the iOS standalone keyboard bug (first keyboard open permanently shrinks the layout viewport ~59px for the session, observed in a sibling PWA) can never trigger here — which also means this app is the cleanest testbed for whether its configuration (no `viewport-fit=cover`, min-height document layout) avoids the bug. Add a single-line text input to the Session view in `src/session.js`, labeled "Session note", visually unobtrusive and styled consistently with the existing view (plain field, no persistence required — it does not need to save anywhere, though wiring it into the session record via `src/store.js` is acceptable if trivial). It must be an ordinary focusable `<input type="text">` so the software keyboard opens on tap. Set `font-size` at 16px or larger so iOS does not zoom on focus. No other behavior changes. Acceptance criteria: (a) the Session view shows the input and tapping it opens the software keyboard in the installed app; (b) dismissing the keyboard returns the view without errors; (c) all existing session start/stop behavior is unchanged; (d) the input is added in one clearly-commented block so it can be removed in a single later entry.
   - File: `src/session.js`, `src/style.css`
