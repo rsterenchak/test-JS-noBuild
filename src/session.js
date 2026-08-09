@@ -81,6 +81,33 @@ export function initSession(root) {
         if (completed) openTagSheet(completed.id);
     }
 
+    // --- TEMPORARY: session-note keyboard probe (entry 9d783a1f) ---------------
+    // A diagnostic single-line input added purely to open the software keyboard
+    // on this app, so we can test whether the iOS standalone keyboard
+    // viewport-shrink bug (first focus permanently shrinks the layout viewport,
+    // seen in a sibling PWA) reproduces here. It holds no state and persists
+    // nothing. font-size is kept >= 16px in `.session__note-input` so iOS does
+    // not zoom on focus. Remove this whole block AND its `appendSessionNote(root)`
+    // call in render() together in one later entry.
+    function appendSessionNote(parent) {
+        const label = document.createElement('label');
+        label.className = 'session__note';
+
+        const caption = document.createElement('span');
+        caption.className = 'session__note-caption';
+        caption.textContent = 'Session note';
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'session__note-input';
+        input.setAttribute('aria-label', 'Session note');
+        input.autocomplete = 'off';
+
+        label.append(caption, input);
+        parent.appendChild(label);
+    }
+    // --- END TEMPORARY session-note keyboard probe -----------------------------
+
     function render() {
         const model = sessionViewModel(getActiveSession(), Date.now());
         root.textContent = '';
@@ -109,6 +136,9 @@ export function initSession(root) {
             start.addEventListener('click', handleStart);
             root.appendChild(start);
         }
+
+        // TEMPORARY: session-note keyboard probe — remove with the block above.
+        appendSessionNote(root);
     }
 
     render();

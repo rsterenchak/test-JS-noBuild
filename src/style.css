@@ -95,6 +95,43 @@ body {
     outline-color: var(--accent);
 }
 
+/* --- TEMPORARY: session-note keyboard probe (entry 9d783a1f) ---------------
+   Styles for the diagnostic "Session note" input rendered by session.js. Kept
+   visually unobtrusive — a plain surface field beneath the control. The 16px
+   minimum font-size is load-bearing: it stops iOS Safari from zooming the page
+   on focus, which would confound the viewport-shrink measurement this probe
+   exists to take. Remove this block with the matching block in session.js. */
+.session__note {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    width: min(72vw, 18rem);
+}
+
+.session__note-caption {
+    font-size: 0.85rem;
+    color: color-mix(in srgb, var(--fg) 55%, transparent);
+}
+
+.session__note-input {
+    -webkit-appearance: none;
+    appearance: none;
+    font: inherit;
+    font-size: 16px;
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--fg) 20%, transparent);
+    border-radius: 0.6rem;
+    background: var(--surface);
+    color: var(--fg);
+}
+
+.session__note-input:focus-visible {
+    outline: 2px solid var(--fg);
+    outline-offset: 2px;
+}
+/* --- END TEMPORARY session-note keyboard probe ----------------------------- */
+
 /* The tag sheet: slides up from the bottom after a session stops, dimming the
    screen behind it. A backdrop tap dismisses it one-handed. */
 .tag-sheet__backdrop {
