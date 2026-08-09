@@ -66,3 +66,10 @@
   - File: `src/session.js`, `src/style.css`
   - Completed:
   <!-- id: 9d783a1f-81da-40d1-b3b1-209b88f4571d -->
+
+- [ ] **[LOW]** Add viewport-fit=cover to the viewport meta as the second keyboard-probe variable
+  - Type: feature
+  - Description: Second step of the standalone viewport-shrink probe. With this app's current meta (`width=device-width, initial-scale=1`) a keyboard open/close cycle in the installed iOS app does NOT shrink the layout viewport, while a sibling PWA with `viewport-fit=cover` shrinks ~59px per session under identical conditions. Two configuration differences exist between the apps; this entry flips exactly one of them so the ingredient can be isolated. In `index.html`, change the viewport meta content to `width=device-width, initial-scale=1, viewport-fit=cover`. Change nothing else — no CSS, no safe-area padding, no layout edits; nothing in this app reads `env()`, and its tab bar already paints to the physical screen edge, so the attribute should be visually inert here. Add a one-line comment above the meta noting it is part of the removable keyboard-shrink probe alongside the Session note field. Acceptance criteria: (a) the deployed page's viewport meta contains `viewport-fit=cover`; (b) no other file changes; (c) desktop rendering is unchanged; (d) the comment marks it as probe-related for later removal.
+  - File: `index.html`
+  - Completed:
+  <!-- id: 7d890726-cb64-4d40-94b4-f8f759f08d2f -->
